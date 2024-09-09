@@ -22,12 +22,12 @@ Route::get('storage-link', function(){
 El directorio [public/storage] ha sido vinculado.';
 });
 
-Route::get('/cache', function () {
-   echo Artisan::call('config:clear');
-   echo Artisan::call('config:cache');
-   echo Artisan::call('cache:clear');
-   echo Artisan::call('route:clear');
-});
+// Route::get('/cache', function () {
+//    echo Artisan::call('config:clear');
+//    echo Artisan::call('config:cache');
+//    echo Artisan::call('cache:clear');
+//    echo Artisan::call('route:clear');
+// });
 
 
 // Route::get('/', function () {
