@@ -86,12 +86,25 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12">
-        <div class="form-group">
-            <strong>Roles:</strong>
-            {!! Form::select('roles[]', $roles, [], ['class' => 'form-control', 'multiple']) !!}
-        </div>
+<div id="roleslist">
+    <div class="form-group col-sm-12">
+        <h3>Lista de roles</h3>
+    </div>
+    <div class="form-group col-sm-12">
+        <ul class="list-unstyled">
+            @foreach ($roles as $role)
+                <li>
+                    <label>
+                        {{ Form::checkbox('roles[]', $role->id, false) }}
+                        {{ $role->name }}
+                        <em>({{ $role->description ?: 'N/A' }})</em>
+                    </label>
+                </li>
+            @endforeach
+        </ul>
+        @error('roles')
+            <span class="text-danger">{{ $message }}</span>
+        @enderror
     </div>
 </div>
 

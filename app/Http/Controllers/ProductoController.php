@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
 
-    function __construct()
+    public function __construct()
     {
         $this->middleware('permission:producto-list|producto-create|producto-edit|producto-delete', ['only' => ['index', 'show']]);
         $this->middleware('permission:producto-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:producto-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:producto-delete', ['only' => ['destroy']]);
     }
-
 
     /**
      * Display a listing of the resource.
@@ -39,7 +38,7 @@ class ProductoController extends Controller
     {
         $pro = Producto::get();
         $cat = Categoria::get();
-        return view('productos.create', compact('pro','cat'));
+        return view('productos.create', compact('pro', 'cat'));
     }
 
     /**
@@ -59,7 +58,6 @@ class ProductoController extends Controller
             $pro->pro_avatar = $image1;
             $request->pro_avatar->storeAs('public/productos', $filename);
             // $filename=$request->imagen->storeAs('public/productos',$filename);
-
 
             $pro->pro_name = $request->input('pro_name');
             $pro->pro_descripcion = $request->input('pro_descripcion');
@@ -101,7 +99,7 @@ class ProductoController extends Controller
     {
         $pro = Producto::find($id);
         $cat = Categoria::get();
-        return view('productos.edit', compact('pro','cat'));
+        return view('productos.edit', compact('pro', 'cat'));
     }
 
     /**
@@ -114,7 +112,7 @@ class ProductoController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'pro_avatar'=>'image|max:5000|mimes:jpg,png,jpeg,gif,svg',
+            'pro_avatar' => 'image|max:5000|mimes:jpg,png,jpeg,gif,svg',
             'pro_name' => 'required',
             'id_cat' => 'required',
             'pro_descripcion' => 'required|max:150',
@@ -132,11 +130,11 @@ class ProductoController extends Controller
             // $image1 = $pro->cat_avatar;
             // $image1=$request->cat_avatar->storeAs('public/productos',$image1);
 
-            $pro->update($request->only('pro_name', 'pro_descripcion', 'pro_link','id_cat'));
+            $pro->update($request->only('pro_name', 'pro_descripcion', 'pro_link', 'id_cat'));
             return redirect()->route('productos.index')
                 ->with(['success' => 'Guardado exitosamente']);
         } else {
-            $pro->update($request->only('pro_name', 'pro_descripcion', 'pro_link','id_cat'));
+            $pro->update($request->only('pro_name', 'pro_descripcion', 'pro_link', 'id_cat'));
             return redirect()->route('productos.index')
                 ->with(['success' => 'Guardado exitosamente']);
         }
@@ -150,7 +148,7 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        try{
+        try {
 
             $pro = Producto::find($id);
             $path = 'public/productos/';
@@ -160,9 +158,9 @@ class ProductoController extends Controller
             $pro = Producto::find($id)->delete();
 
             return back()->with(['success' => 'Eliminado exitosamente']);
-        }catch(\Illuminate\Database\QueryException $e){
+        } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->route('productos.index')
-            ->with(['error' => 'No se puede eliminar ya que tiene datos anidados.']);
+                ->with(['error' => 'No se puede eliminar ya que tiene datos anidados.']);
         }
     }
 }

@@ -3,14 +3,18 @@
     <title>Administración del sistema | {{ $admin->name }}</title>
     <meta name="robots" content="noindex">
     <style type="text/css">
-        #preview_logo img {
-            object-fit: cover;
-            width: 100%;
+        #preview_logo, #preview_favicon {
+            background-color: #c4c2c2;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
-        #preview_favicon img {
+        #preview_logo img, #preview_favicon img {
             object-fit: cover;
-            width: 100%;
+            max-width: 100%;
+            height: auto;
         }
     </style>
 @endsection
@@ -55,7 +59,6 @@
                         </div>
                     @endif
 
-
                     {!! Form::model($admin, ['method' => 'PATCH', 'route' => ['administracion.update', $admin->id], 'enctype' => 'multipart/form-data', 'method' => 'PUT']) !!}
                     @csrf
                     <div class="card card-primary card-outline">
@@ -74,53 +77,45 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-12">
                                     <label for="">Nombre corto del sistema:</label>
-                                    <input type="text" class="form-control" name="short_name"
-                                        value="{{ $admin->short_name }}">
+                                    <input type="text" class="form-control" name="short_name" value="{{ $admin->short_name }}">
                                 </div>
                             </div>
-
-
 
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <label for="formFile" class="form-label">Logo:</label>
                                     <div id="preview_logo" class="col-sm-12">
-                                        <img class="" src="<?php echo asset("/storage/$admin->logo"); ?>">
+                                        <img class="img-fluid" src="{{ asset("/storage/administration/$admin->logo") }}" alt="Logo del sistema">
                                     </div>
                                     <input class="form-control" type="file" id="logo" name="logo" value="{{ $admin->logo }}">
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <label for="formFile" class="form-label">Favicon:</label>
                                     <div id="preview_favicon" class="col-sm-12">
-                                        <img class="" src="<?php echo asset("/storage/$admin->favicon"); ?>">
+                                        <img class="img-fluid" src="{{ asset("/storage/administration/$admin->favicon") }}" alt="Favicon del sistema">
                                     </div>
                                     <input class="form-control" type="file" id="favicon" name="favicon" value="{{ $admin->favicon }}">
                                 </div>
                             </div>
 
-
-
                             <hr>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <button type="submit" class="btn btn-primary btn-block" id="guardar"><i
-                                            class="fas fa-save"></i> |
-                                        Guardar</button>
+                                    <button type="submit" class="btn btn-primary btn-block" id="guardar">
+                                        <i class="fas fa-save"></i> | Guardar
+                                    </button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <i class="btn btn-info btn-block" aria-hidden="true" onclick="history.back ();"><i
-                                            class="fas fa-undo"></i> |
-                                        Regresar</i>
+                                    <button type="button" class="btn btn-info btn-block" onclick="history.back();">
+                                        <i class="fas fa-undo"></i> | Regresar
+                                    </button>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                     {!! Form::close() !!}
 
                 </div>
-
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->

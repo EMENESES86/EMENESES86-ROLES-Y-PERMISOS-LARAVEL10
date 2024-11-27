@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -18,7 +18,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
+    public function __construct()
     {
         $this->middleware('permission:users-list|users-create|users-edit|users-delete', ['only' => ['index', 'show']]);
         $this->middleware('permission:users-create', ['only' => ['create', 'store']]);
@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name', 'name')->all();
+        $roles = Role::all(); // Obtén todos los roles como una colección de objetos
         return view('users.create', compact('roles'));
     }
 
@@ -70,7 +70,7 @@ class UserController extends Controller
             'lastname2' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'roles' => 'required',
         ]);
 
         $input = $request->all();
@@ -120,33 +120,32 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'avatar'=>'image|max:5000',
+            'avatar' => 'image|max:5000',
             'name1' => 'required',
             'name2' => 'required',
             'lastname1' => 'required',
             'lastname2' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'same:confirm-password',
-            'roles' => 'required'
+            'roles' => 'required',
         ]);
 
         $users = User::findOrFail($id);
-        if($request->hasFile('avatar')){
-            $nombre = ($request->cedula).".jpg";
+        if ($request->hasFile('avatar')) {
+            $nombre = ($request->cedula) . ".jpg";
 
-            $users->avatar=$nombre;
-            $filename=$nombre;
-            $request->avatar->storeAs('public/usuarios',$filename);
+            $users->avatar = $nombre;
+            $filename = $nombre;
+            $request->avatar->storeAs('public/usuarios', $filename);
 
             if ($request->password != "") {
                 $users->password = Hash::make($request->password);
             }
 
-
-            $users->update($request->only('name1','name2','lastname1','lastname2','cedula','telefono','email'));
+            $users->update($request->only('name1', 'name2', 'lastname1', 'lastname2', 'cedula', 'telefono', 'email'));
             return redirect()->route('users.index')
                 ->with('success', 'User updated successfully');
-        }else{
+        } else {
 
             $input = $request->all();
             if (!empty($input['password'])) {
@@ -177,7 +176,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $users = User::find($id);
-        $path= 'public/usuarios/';
+        $path = 'public/usuarios/';
         $image1 = $users->avatar;
         $users = Storage::delete($path . $image1);
 
@@ -185,7 +184,6 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
     }
-
 
     public function subir()
     {

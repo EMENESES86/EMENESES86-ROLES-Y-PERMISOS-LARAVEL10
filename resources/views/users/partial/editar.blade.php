@@ -66,9 +66,21 @@
 </div>
 
 <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <label>Si quiere cambiar su contraseña habilítelo</label>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="changePasswordSwitch"
+                onclick="togglePasswordFields()">
+            <label class="custom-control-label" for="changePasswordSwitch">Habilitar cambio de contraseña</label>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" id="passwordFields" style="display: none;">
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Password</label>
-        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" >
+        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password">
         @error('password')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -77,8 +89,8 @@
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Confirmar password</label>
-        <input class="form-control @error('password') is-invalid @enderror" type="password" name="confirm-password" >
-        @error('password')
+        <input class="form-control" type="password" name="confirm-password">
+        @error('confirm-password')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
@@ -115,42 +127,10 @@
         <i class="btn btn-info btn-block" aria-hidden="true" onclick="history.back ();"><i class="fas fa-undo"></i> | Regresar</i>
     </div>
 </div>
-
 <script>
-    function filterFloat(evt, input) {
-        // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
-        var key = window.Event ? evt.which : evt.keyCode;
-        var chark = String.fromCharCode(key);
-        var tempValue = input.value + chark;
-        if (key >= 48 && key <= 57) {
-            if (filter(tempValue) === false) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            if (key == 8 || key == 13 || key == 0) {
-                return true;
-            } else if (key == 46) {
-                if (filter(tempValue) === false) {
-                    return false;
-                } else {
-                    return true;
-                }
-            } else {
-                return false;
-            }
-        }
+    function togglePasswordFields() {
+        const passwordFields = document.getElementById('passwordFields');
+        passwordFields.style.display = passwordFields.style.display === 'none' ? 'block' : 'none';
     }
-
-    function filter(__val__) {
-        var preg = /^([0-9]+\.?[0-9]{0,2})$/;
-        if (preg.test(__val__) === true) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
 </script>
+
