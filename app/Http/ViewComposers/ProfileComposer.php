@@ -4,8 +4,6 @@ namespace App\Http\ViewComposers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Models\Categoria;
-use App\Models\Producto;
 use App\Models\Admin;
 
 
@@ -30,8 +28,6 @@ class ProfileComposer {
      */
     public function compose(View $view)
     {
-    	$cateall = Categoria::get();
-        $view->with('cateall', $cateall);
 
         $admin = Admin::first();
         $view->with('admin', $admin);

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    <title>Crear Usuario - ISUS</title>
+    <title>Crear Usuario</title>
     <meta name="robots" content="noindex">
     <style type="text/css">
         .#preview {

@@ -4,7 +4,7 @@
         <div class="row">
 
             <div id="preview" class="col-sm-12" align="center">
-                <img class="img-circle" src="<?php echo asset("/storage/usuarios/$user->avatar"); ?>" alt="User Avatar">
+                <img class="img-circle" src="{{ asset("/storage/administration/$admin->favicon") }}" alt="User Avatar">
             </div>
         </div>
 
@@ -30,38 +30,27 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6">
-        <label>Primer Nombre</label>
-        <input class="form-control" type="text" name="name1" value="{{$user->name1}}" required>
+        <label>Nombres</label>
+        <input class="form-control" type="text" name="name" value="{{ $user->name }}" required>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
-        <label>Segundo Nombre</label>
-        <input class="form-control" type="text" name="name2" value="{{$user->name2}}" required>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-6">
-        <label>Primer Apellido</label>
-        <input class="form-control" type="text" name="lastname1" value="{{$user->lastname1}}" required>
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-6">
-        <label>Segundo Apellido</label>
-        <input class="form-control" type="text" name="lastname2" value="{{$user->lastname2}}" required>
+        <label>Apellidos</label>
+        <input class="form-control" type="text" name="lastname" value="{{ $user->lastname }}" required>
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Email</label>
-        <input class="form-control" type="text" name="email" value="{{$user->email}}" required>
+        <input class="form-control" type="text" name="email" value="{{ $user->email }}" required>
     </div>
     <div class="col-sm-12 col-md-3 col-lg-3">
         <label>Cédula</label>
-        <input class="form-control" type="text" name="cedula" value="{{$user->cedula}}" required>
+        <input class="form-control" type="text" name="cedula" value="{{ $user->cedula }}" required>
     </div>
     <div class="col-sm-12 col-md-3 col-lg-3">
         <label>Teléfono</label>
-        <input class="form-control" type="text" name="telefono" value="{{$user->telefono}}" required>
+        <input class="form-control" type="text" name="telefono" value="{{ $user->telefono }}" required>
     </div>
 </div>
 
@@ -121,10 +110,12 @@
 <hr>
 <div class="row">
     <div class="col-6">
-        <button type="submit" class="btn btn-primary btn-block" id="guardar"><i class="fas fa-save"></i> | Guardar</button>
+        <button type="submit" class="btn btn-primary btn-block" id="guardar"><i class="fas fa-save"></i> |
+            Guardar</button>
     </div>
     <div class="col-6">
-        <i class="btn btn-info btn-block" aria-hidden="true" onclick="history.back ();"><i class="fas fa-undo"></i> | Regresar</i>
+        <i class="btn btn-info btn-block" aria-hidden="true" onclick="history.back ();"><i class="fas fa-undo"></i> |
+            Regresar</i>
     </div>
 </div>
 <script>
@@ -133,4 +124,3 @@
         passwordFields.style.display = passwordFields.style.display === 'none' ? 'block' : 'none';
     }
 </script>
-

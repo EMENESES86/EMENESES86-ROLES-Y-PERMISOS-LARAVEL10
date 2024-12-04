@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
+use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class CreateAdminUserSeeder extends Seeder
 {
@@ -18,18 +18,16 @@ class CreateAdminUserSeeder extends Seeder
     {
         $user = User::create([
             'cedula' => '1714355482',
-            'name1' => 'EDISON',
-            'name2' => 'FERNANDO',
-            'lastname1' => 'MENESES',
-            'lastname2' => 'TORRES',
+            'name' => 'EDISON FERNANDO',
+            'lastname' => 'MENESES TORRES',
             'email' => 'emeneses.developers@gmail.com',
             'avatar' => 'EM_LOGO.jpg',
-            'password' => bcrypt('123456')
+            'password' => bcrypt('123456'),
         ]);
 
         $role = Role::create(['name' => 'Admin']);
 
-        $permissions = Permission::pluck('id','id')->all();
+        $permissions = Permission::pluck('id', 'id')->all();
 
         $role->syncPermissions($permissions);
 

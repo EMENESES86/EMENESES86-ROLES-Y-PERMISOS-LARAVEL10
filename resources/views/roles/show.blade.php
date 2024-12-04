@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    <title>Ver rol {{ $role->name }} - ISUS</title>
+    <title>Ver rol {{ $role->name }}</title>
     <meta name="robots" content="noindex">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 @endsection

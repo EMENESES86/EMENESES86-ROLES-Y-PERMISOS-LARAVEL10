@@ -4,7 +4,8 @@
         <div class="row">
 
             <div id="preview" class="col-sm-12" align="center">
-                <img class="img-circle" src="{{ asset('dist/img/logo_sucre.png') }}" alt="User Avatar">
+                <img class="img-circle" src="{{ asset("/storage/administration/$admin->favicon") }}?{{ time() }}"
+                    alt="User Avatar">
             </div>
         </div>
 
@@ -30,23 +31,12 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6">
-        <label>Primer Nombre</label>
-        <input class="form-control" type="text" name="name1" required>
+        <label>Nombres</label>
+        <input class="form-control" type="text" name="name" required>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
-        <label>Segundo Nombre</label>
-        <input class="form-control" type="text" name="name2" required>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-6">
-        <label>Primer Apellido</label>
-        <input class="form-control" type="text" name="lastname1" required>
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-6">
-        <label>Segundo Apellido</label>
-        <input class="form-control" type="text" name="lastname2" required>
+        <label>Apellidos</label>
+        <input class="form-control" type="text" name="lastname" required>
     </div>
 </div>
 

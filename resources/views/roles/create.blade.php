@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    <title>Crear Roles y Permisos - ISUS</title>
+    <title>Crear Roles y Permisos</title>
     <meta name="robots" content="noindex">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 @endsection

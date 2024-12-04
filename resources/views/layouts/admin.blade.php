@@ -194,7 +194,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <i class="fas fa-user"></i> {{ Auth::user()->name1 }} {{ Auth::user()->lastname1 }}
+                            <i class="fas fa-user"></i> {{ Auth::user()->name }} {{ Auth::user()->lastname }}
                             <span class="caret"></span>
                         </a>
 
@@ -231,25 +231,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Sidebar -->
             <div class="sidebar">
                 <a href="{{ route('home') }}" class="brand-link">
-                    <img src="<?php echo asset("/storage/$admin->logo"); ?>" width="235" alt="{{ $admin->name }}" class="elevation-3"
+                    <img src="<?php echo asset("/storage/$admin->logo") . '?' . time(); ?>" width="235" alt="{{ $admin->name }}" class="elevation-3"
                         style="max-width: 100%; height: auto;">
                 </a>
                 <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center">
+                    <div class="image" style="margin-right: 10px;">
                         @guest
                             <img src="<?php echo asset("/storage/$admin->favicon"); ?>" class="img-circle elevation-2">
                         @else
-                            <img class="img-circle elevation-2" src="{{ url('storage/usuarios', Auth::user()->avatar) }}">
+                            <img class="img-circle elevation-2"
+                                src="{{ url('storage/usuarios', Auth::user()->avatar) }}?{{ time() }}">
                         @endguest
                     </div>
-                    <div class="info">
+                    <div class="info" style="text-align: center;">
 
                         @guest
                             <a href="#" class="d-block">Invitado</a>
                         @else
-                            <a href="#" class="d-block">{{ Auth::user()->name1 }}
-                                {{ Auth::user()->lastname1 }}</a>
+                            <a href="#" class="d-block" style="color: white;">
+                                <span style="display: block;">{{ Auth::user()->name }}</span>
+                                <span style="display: block;">{{ Auth::user()->lastname }}</span>
+                            </a>
                         @endguest
                     </div>
                 </div>
@@ -272,7 +275,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         @can('users-list')
                             <li
-                                class="nav-item {{ Request::is(['administracion', 'administracion/*', 'users', 'users/*', 'roles', 'roles/*', 'categorias', 'categorias/*', 'productos', 'productos/*']) ? 'menu-open' : '' }}">
+                                class="nav-item {{ Request::is(['administracion', 'administracion/*', 'users', 'users/*', 'roles', 'roles/*']) ? 'menu-open' : '' }}">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
@@ -280,7 +283,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
+                                <ul class="nav nav-treeview" style="padding-left: 15px;">
                                     <li class="nav-item">
                                         <a href="{{ route('administracion.index') }}"
                                             class="nav-link {{ Request::is(['administracion', 'administracion/*']) ? 'active' : '' }}">
@@ -302,45 +305,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <p>Roles</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('categorias.index') }}"
-                                            class="nav-link {{ Request::is(['categorias/*', 'categorias']) ? 'active' : '' }}">
-                                            <i class="fas fa-asterisk nav-icon"></i>
-                                            <p>Categorías</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('productos.index') }}"
-                                            class="nav-link {{ Request::is(['productos/*', 'productos']) ? 'active' : '' }}">
-                                            <i class="fas fa-clone nav-icon"></i>
-                                            <p>Productos</p>
-                                        </a>
-                                    </li>
+
                                 </ul>
                             </li>
                         @endcan
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fab fa-buffer nav-icon"></i>
-
-                                <p>
-                                    <p>Categorías</p>
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                @foreach ($cateall as $cat)
-                                    <li class="nav-item">
-                                        <a href="{{ route('home.productos', $cat->id) }}" class="nav-link">
-                                            <i class="fas fa-angle-double-right nav-icon"></i>
-                                            <p>{{ $cat->cat_name }}</p>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-
 
                     </ul>
                 </nav>

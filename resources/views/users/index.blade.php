@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    <title>Usuarios del Sistema - ISUS</title>
+    <title>Usuarios del Sistema</title>
     <meta name="robots" content="noindex">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 @endsection
@@ -75,8 +75,7 @@
                                             <tr>
                                                 <td></td>
                                                 <td>{{ $user->cedula }}</td>
-                                                <td>{{ $user->name1 }} {{ $user->name2 }} {{ $user->lastname1 }}
-                                                    {{ $user->lastname2 }}</td>
+                                                <td>{{ $user->name }} {{ $user->lastname }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>
                                                     @if (!empty($user->getRoleNames()))

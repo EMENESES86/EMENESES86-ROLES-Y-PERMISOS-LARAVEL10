@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    <title>Ver Usuario - ISUS</title>
+    <title>Ver Usuario</title>
     <meta name="robots" content="noindex">
 
     <style type="text/css">
@@ -20,7 +20,6 @@
             border-radius: 160px;
             border: 5px solid #666;
         }
-
     </style>
 @endsection
 
@@ -69,7 +68,8 @@
                     {{-- card --}}
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h5 class="m-0">Usuario: {{ $user->name1 }} {{ $user->name2 }} {{ $user->lastname1 }} {{ $user->lastname2 }}</h5>
+                            <h5 class="m-0">Usuario: {{ $user->name1 }} {{ $user->name2 }} {{ $user->lastname1 }}
+                                {{ $user->lastname2 }}</h5>
                         </div>
                         <div class="card-body">
 

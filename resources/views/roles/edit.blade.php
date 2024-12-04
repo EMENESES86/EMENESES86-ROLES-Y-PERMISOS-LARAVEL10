@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    <title>Editar permisos {{ $role->name }} - ISUS</title>
+    <title>Editar permisos {{ $role->name }}</title>
     <meta name="robots" content="noindex">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 @endsection
@@ -67,7 +67,7 @@
                                     <a class="btn btn-primary btn-block" href="{{ route('roles.index') }}"> Back</a>
                                 </div>
                             </div>
-                            
+
                             {!! Form::close() !!}
                         </div>
                     </div>

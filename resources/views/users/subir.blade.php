@@ -6,8 +6,6 @@
 
 
 @section('content')
-
-
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
@@ -52,7 +50,8 @@
                                         <button class="btn btn-success">
                                             <i class="fa-solid fa-cloud-arrow-up"></i> Importar usuarios
                                         </button>
-                                        <a class="btn btn-info" href="{{ route('users.index') }}"><i class="fa-sharp fa-solid fa-rotate-left"></i> Regresar a usuarios</a>
+                                        <a class="btn btn-info" href="{{ route('users.index') }}"><i
+                                                class="fa-sharp fa-solid fa-rotate-left"></i> Regresar a usuarios</a>
                                     </div>
                                 </div>
                             </form>

@@ -4,7 +4,7 @@
         <div class="row">
 
             <div id="preview" class="col-sm-12" align="center">
-                <img class="img-circle" src="<?php echo asset("/storage/usuarios/$user->avatar"); ?>" alt="User Avatar">
+                <img class="img-circle" src="<?php echo asset("/storage/usuarios/$user->avatar"). '?' . time(); ?>" alt="User Avatar">
             </div>
         </div>
 
@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Nombres y Apellidos:</label>
-        <p>{{ $user->name1 }} {{ $user->name2 }} {{ $user->lastname1 }} {{ $user->lastname2 }}</p>
+        <p>{{ $user->name }} {{ $user->lastname }}</p>
     </div>
 
     <div class="col-sm-12 col-md-6 col-lg-6">

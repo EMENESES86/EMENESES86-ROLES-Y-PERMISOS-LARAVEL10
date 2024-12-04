@@ -1,7 +1,10 @@
 @extends('layouts.admin')
+@section('title')
+    <title>Confirm Password</title>
+@endsection
 
 @section('content')
-<div class="container">
+<div class="container" style="padding-top: 50px">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

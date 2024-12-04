@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    <title>Editar Usuario - ISUS</title>
+    <title>Editar Usuario</title>
     <meta name="robots" content="noindex">
     <style type="text/css">
         .#preview {
@@ -19,7 +19,6 @@
             border-radius: 160px;
             border: 5px solid #666;
         }
-
     </style>
 @endsection
 
@@ -73,7 +72,12 @@
                         </div>
                         <div class="card-body">
 
-                            {!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.update', $user->id], 'enctype' => 'multipart/form-data', 'method' => 'PUT']) !!}
+                            {!! Form::model($user, [
+                                'method' => 'PATCH',
+                                'route' => ['users.update', $user->id],
+                                'enctype' => 'multipart/form-data',
+                                'method' => 'PUT',
+                            ]) !!}
                             @csrf
                             @include('users.partial.editar')
 
