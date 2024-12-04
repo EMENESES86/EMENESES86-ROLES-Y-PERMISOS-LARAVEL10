@@ -32,11 +32,11 @@
                 <div class="container-fluid">
 
                     @if (session('success'))
-                    <div class="alerta alert alert-info">{{ session('success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                        <div class="alerta alert alert-info">{{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                     @endif
                     @if (session('error'))
                         <div class="alerta alert alert-danger">{{ session('error') }}
@@ -50,7 +50,8 @@
 
                         <div class="card-header">
                             <h5 class="m-0">Usuarios del sistema <a href="{{ route('users.create') }}"
-                                    class="btn btn-sm btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i> Crear usuario</a></h5>
+                                    class="btn btn-sm btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                    Crear usuario</a></h5>
                         </div>
                         <div class="card-body">
 
@@ -74,7 +75,8 @@
                                             <tr>
                                                 <td></td>
                                                 <td>{{ $user->cedula }}</td>
-                                                <td>{{ $user->name1 }} {{ $user->name2 }} {{ $user->lastname1 }} {{ $user->lastname2 }}</td>
+                                                <td>{{ $user->name1 }} {{ $user->name2 }} {{ $user->lastname1 }}
+                                                    {{ $user->lastname2 }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>
                                                     @if (!empty($user->getRoleNames()))
@@ -87,17 +89,18 @@
                                                 <td>
                                                     <a class="btn btn-info btn-block btn-sm"
                                                         href="{{ route('users.show', $user->id) }}"><i class="fa fa-eye"
-                                                        aria-hidden="true"></i> Ver</a>
+                                                            aria-hidden="true"></i> Ver</a>
                                                 </td>
                                                 <td>
                                                     <a class="btn btn-primary btn-block btn-sm"
                                                         href="{{ route('users.edit', $user->id) }}"><i
-                                                        class="fa fa-pencil-square" aria-hidden="true"></i> Edit</a>
+                                                            class="fa fa-pencil-square" aria-hidden="true"></i> Edit</a>
                                                 </td>
                                                 <td>
                                                     {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) !!}
                                                     <button class="btn btn-danger btn-block btn-sm" type="submit"
-                                                        id="deleteButton"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</button>
+                                                        id="deleteButton"><i class="fa fa-trash" aria-hidden="true"></i>
+                                                        Eliminar</button>
                                                     {!! Form::close() !!}
                                                 </td>
 
@@ -154,7 +157,7 @@
         $(document).ready(function() {
             var t = $('#myTable').DataTable({
                 "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
                 },
                 "columnDefs": [{
                     "searchable": false,
@@ -179,25 +182,25 @@
         });
     </script>
 
-<script>
-    $('button#deleteButton').on('click', function(e) {
-        // var name = document.getElementById("name");
-        e.preventDefault();
-        swal({
-                title: "Cuidado",
-                text: "Quiere eliminar?",
-                icon: "warning",
-                dangerMode: true,
-                buttons: {
-                    cancel: "Cerrar",
-                    confirm: "Confirmar",
-                },
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    $(this).closest("form").submit();
-                }
-            });
-    });
-</script>
+    <script>
+        $('button#deleteButton').on('click', function(e) {
+            // var name = document.getElementById("name");
+            e.preventDefault();
+            swal({
+                    title: "Cuidado",
+                    text: "Quiere eliminar?",
+                    icon: "warning",
+                    dangerMode: true,
+                    buttons: {
+                        cancel: "Cerrar",
+                        confirm: "Confirmar",
+                    },
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $(this).closest("form").submit();
+                    }
+                });
+        });
+    </script>
 @endsection

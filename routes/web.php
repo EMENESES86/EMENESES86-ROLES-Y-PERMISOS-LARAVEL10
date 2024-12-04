@@ -1,12 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\CategoriaController;
+use Illuminate\Support\Facades\Route;
 
 // ejecutar storage link
 Route::get('storage-link', function () {
@@ -30,7 +30,6 @@ Route::get('/cache', function () {
     echo Artisan::call('route:clear');
 });
 
-
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -38,7 +37,6 @@ Route::get('/cache', function () {
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/home/productos/{id}', [HomeController::class, 'productos'])->name('home.productos');
 
 Route::group(['middleware' => ['auth']], function () {
