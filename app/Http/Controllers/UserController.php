@@ -7,8 +7,8 @@ use App\Models\User;
 use DB;
 use Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Image;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -64,23 +64,47 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name1' => 'required',
-            'name2' => 'required',
-            'lastname1' => 'required',
-            'lastname2' => 'required',
+            'avatar' => 'nullable|image',
+            'name' => 'required',
+            'lastname' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required',
         ]);
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
+        // Manejo del avatar si se sube
+        if ($request->hasFile('avatar')) {
+            // Validar que la imagen sea cuadrada
+            $imagePath = $request->file('avatar')->getRealPath();
+            list($width, $height) = getimagesize($imagePath);
+
+            if ($width !== $height) {
+                return redirect()->back()
+                    ->withErrors(['avatar' => 'La imagen debe ser cuadrada; las dimensiones de ancho y alto deben ser iguales.'])
+                    ->withInput();
+            }
+
+            $nombre = $request->cedula . ".jpg";
+            $ruta = storage_path('app/public/usuarios/') . $nombre;
+
+            // Guardar la imagen redimensionada
+            Image::make($request->file('avatar'))
+                ->resize(200, 200)
+                ->save($ruta);
+
+            $input['avatar'] = $nombre;
+        } else {
+            // Asignar imagen por defecto si no se sube avatar
+            $input['avatar'] = 'EM_LOGO.jpg';
+        }
+
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
-            ->with('success', 'User created successfully');
+            ->with('success', 'Usuario creado exitosamente.');
     }
 
     /**
@@ -119,52 +143,54 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validar los datos de entrada
         $this->validate($request, [
-            'avatar' => 'image|max:5000',
-            'name1' => 'required',
-            'name2' => 'required',
-            'lastname1' => 'required',
-            'lastname2' => 'required',
+            'avatar' => 'nullable|image',
+            'name' => 'nullable',
+            'lastname' => 'nullable',
             'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'same:confirm-password',
+            'password' => 'nullable|same:confirm-password',
             'roles' => 'required',
         ]);
 
-        $users = User::findOrFail($id);
+        $user = User::findOrFail($id);
+
         if ($request->hasFile('avatar')) {
-            $nombre = ($request->cedula) . ".jpg";
+            // Validar que la imagen sea cuadrada
+            $imagePath = $request->file('avatar')->getRealPath();
+            list($width, $height) = getimagesize($imagePath);
 
-            $users->avatar = $nombre;
-            $filename = $nombre;
-            $request->avatar->storeAs('public/usuarios', $filename);
-
-            if ($request->password != "") {
-                $users->password = Hash::make($request->password);
+            if ($width !== $height) {
+                return redirect()->back()
+                    ->withErrors(['avatar' => 'La imagen debe ser cuadrada; las dimensiones de ancho y alto deben ser iguales.'])
+                    ->withInput();
             }
 
-            $users->update($request->only('name1', 'name2', 'lastname1', 'lastname2', 'cedula', 'telefono', 'email'));
-            return redirect()->route('users.index')
-                ->with('success', 'User updated successfully');
-        } else {
+            $nombre = $request->cedula . ".jpg";
+            $ruta = storage_path('app/public/usuarios/') . $nombre;
 
-            $input = $request->all();
-            if (!empty($input['password'])) {
-                $input['password'] = Hash::make($input['password']);
-            } else {
-                $input = Arr::except($input, array('password'));
-            }
+            // Guardar la imagen redimensionada
+            Image::make($request->file('avatar'))
+                ->resize(200, 200)
+                ->save($ruta);
 
-            $user = User::find($id);
-
-            $user->update($input);
-
-            DB::table('model_has_roles')->where('model_id', $id)->delete();
-
-            $user->assignRole($request->input('roles'));
-
-            return redirect()->route('users.index')
-                ->with('success', 'User updated successfully');
+            $user->avatar = $nombre;
         }
+
+        // Manejo de la contraseña solo si se envía una nueva
+        if (!empty($request->password)) {
+            $user->password = Hash::make($request->password);
+        }
+
+        // Actualizar los datos principales del usuario
+        $user->update($request->only('name', 'lastname', 'cedula', 'telefono', 'email'));
+
+        // Actualizar roles
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        $user->assignRole($request->input('roles'));
+
+        return redirect()->route('users.index')
+            ->with('success', 'User updated successfully');
     }
 
     /**

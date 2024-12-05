@@ -1,56 +1,82 @@
 <div class="box box-widget widget-user">
-    <!-- Add the bg color to the header using any of the bg-* classes -->
     <div class="widget-user-header" style="background: url('<?php echo asset('dist/img/ISUS-fondo.png'); ?>')">
         <div class="row">
-
             <div id="preview" class="col-sm-12" align="center">
-                <img class="img-circle" src="{{ asset("/storage/administration/$admin->favicon") }}" alt="User Avatar">
+                <img class="img-circle" src="{{ asset("storage/usuarios/{$user->avatar}") }}?{{ time() }}"
+                    alt="User Avatar">
             </div>
         </div>
-
     </div>
 </div>
 <br><br><br>
 <hr>
 
-
 <div class="row">
-    {{-- <label>Cambiar el avatar:</label>
-    <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
-        <input type="file" class="custom-file-input " id="validatedInputGroupCustomFile" name="avatar">
-        <label class="custom-file-label" for="validatedInputGroupCustomFile"></label>
-    </div> --}}
-
-
     <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
         <label>Cambiar el avatar:</label>
-        <input class="form-control-file" type="file" name="avatar" id="avatar" value="{{ $user->avatar }}">
+        <input class="form-control-file @error('avatar') is-invalid @enderror" type="file" name="avatar"
+            id="avatar">
+        @error('avatar')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Nombres</label>
-        <input class="form-control" type="text" name="name" value="{{ $user->name }}" required>
+        <input class="form-control @error('name') is-invalid @enderror" type="text" name="name"
+            value="{{ old('name', $user->name) }}">
+        @error('name')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Apellidos</label>
-        <input class="form-control" type="text" name="lastname" value="{{ $user->lastname }}" required>
+        <input class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname"
+            value="{{ old('lastname', $user->lastname) }}">
+        @error('lastname')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Email</label>
-        <input class="form-control" type="text" name="email" value="{{ $user->email }}" required>
+        <input class="form-control @error('email') is-invalid @enderror" type="text" name="email"
+            value="{{ old('email', $user->email) }}" required>
+        @error('email')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
     <div class="col-sm-12 col-md-3 col-lg-3">
         <label>Cédula</label>
-        <input class="form-control" type="text" name="cedula" value="{{ $user->cedula }}" required>
+        <input class="form-control @error('cedula') is-invalid @enderror" type="text" name="cedula"
+            value="{{ old('cedula', $user->cedula) }}" required>
+        @error('cedula')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
     <div class="col-sm-12 col-md-3 col-lg-3">
         <label>Teléfono</label>
-        <input class="form-control" type="text" name="telefono" value="{{ $user->telefono }}" required>
+        <input class="form-control @error('telefono') is-invalid @enderror" type="text" name="telefono"
+            value="{{ old('telefono', $user->telefono) }}">
+        @error('telefono')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 
@@ -65,7 +91,6 @@
     </div>
 </div>
 
-
 <div class="row" id="passwordFields" style="display: none;">
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Password</label>
@@ -78,7 +103,8 @@
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Confirmar password</label>
-        <input class="form-control" type="password" name="confirm-password">
+        <input class="form-control @error('confirm-password') is-invalid @enderror" type="password"
+            name="confirm-password">
         @error('confirm-password')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -96,9 +122,8 @@
             @foreach ($roles as $role)
                 <li>
                     <label>
-                        {{ Form::checkbox('roles[]', $role->id, null) }}
+                        {{ Form::checkbox('roles[]', $role->id, in_array($role->id, old('roles', $user->roles->pluck('id')->toArray())) ? true : false) }}
                         {{ $role->name }}
-                        <em>({{ $role->description ?: 'N/A' }})</em>
                     </label>
                 </li>
             @endforeach
@@ -107,7 +132,6 @@
 </div>
 <hr>
 
-<hr>
 <div class="row">
     <div class="col-6">
         <button type="submit" class="btn btn-primary btn-block" id="guardar"><i class="fas fa-save"></i> |
@@ -118,6 +142,7 @@
             Regresar</i>
     </div>
 </div>
+
 <script>
     function togglePasswordFields() {
         const passwordFields = document.getElementById('passwordFields');

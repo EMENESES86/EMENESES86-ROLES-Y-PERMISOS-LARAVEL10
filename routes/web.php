@@ -17,8 +17,7 @@ Route::get('storage-link', function () {
         public_path('storage')
     );
 
-    return '
-El directorio [public/storage] ha sido vinculado.';
+    return 'El directorio [public/storage] ha sido vinculado.';
 });
 
 Route::get('/cache', function () {
@@ -27,10 +26,6 @@ Route::get('/cache', function () {
     echo Artisan::call('cache:clear');
     echo Artisan::call('route:clear');
 });
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Auth::routes();
 

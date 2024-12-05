@@ -14,51 +14,78 @@
 <br><br><br>
 <hr>
 
-
 <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
         <label>Cambiar el avatar:</label>
-        <input class="form-control-file" type="file" name="avatar" id="avatar">
-    </div>
-</div>
-
-<div class="row">
-    <div class="mb-3">
-        <label for="formFile" class="form-label">Cambiar el avatar:</label>
-        <input class="form-control" type="file" name="avatar" id="avatar">
+        <input class="form-control-file @error('avatar') is-invalid @enderror" type="file" name="avatar" id="avatar">
+        @error('avatar')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Nombres</label>
-        <input class="form-control" type="text" name="name" required>
+        <input class="form-control @error('name') is-invalid @enderror" type="text" name="name"
+            value="{{ old('name') }}" required>
+        @error('name')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Apellidos</label>
-        <input class="form-control" type="text" name="lastname" required>
+        <input class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname"
+            value="{{ old('lastname') }}" required>
+        @error('lastname')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Email</label>
-        <input class="form-control" type="text" name="email" required>
+        <input class="form-control @error('email') is-invalid @enderror" type="email" name="email"
+            value="{{ old('email') }}" required>
+        @error('email')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
     <div class="col-sm-12 col-md-3 col-lg-3">
         <label>Cédula</label>
-        <input class="form-control" type="text" name="cedula" required>
+        <input class="form-control @error('cedula') is-invalid @enderror" type="text" name="cedula"
+            value="{{ old('cedula') }}" required>
+        @error('cedula')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
     <div class="col-sm-12 col-md-3 col-lg-3">
         <label>Teléfono</label>
-        <input class="form-control" type="text" name="telefono" required>
+        <input class="form-control @error('telefono') is-invalid @enderror" type="text" name="telefono"
+            value="{{ old('telefono') }}" required>
+        @error('telefono')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Password</label>
-        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password">
+        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" required>
         @error('password')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -67,8 +94,9 @@
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label>Confirmar password</label>
-        <input class="form-control @error('password') is-invalid @enderror" type="password" name="confirm-password">
-        @error('password')
+        <input class="form-control @error('confirm-password') is-invalid @enderror" type="password"
+            name="confirm-password" required>
+        @error('confirm-password')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
@@ -85,7 +113,7 @@
             @foreach ($roles as $role)
                 <li>
                     <label>
-                        {{ Form::checkbox('roles[]', $role->id, false) }}
+                        {{ Form::checkbox('roles[]', $role->id, in_array($role->id, old('roles', [])) ? true : false) }}
                         {{ $role->name }}
                         <em>({{ $role->description ?: 'N/A' }})</em>
                     </label>
@@ -97,8 +125,6 @@
         @enderror
     </div>
 </div>
-
-
 
 <hr>
 <hr>
@@ -112,41 +138,3 @@
             Regresar</i>
     </div>
 </div>
-
-<script>
-    function filterFloat(evt, input) {
-        // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
-        var key = window.Event ? evt.which : evt.keyCode;
-        var chark = String.fromCharCode(key);
-        var tempValue = input.value + chark;
-        if (key >= 48 && key <= 57) {
-            if (filter(tempValue) === false) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            if (key == 8 || key == 13 || key == 0) {
-                return true;
-            } else if (key == 46) {
-                if (filter(tempValue) === false) {
-                    return false;
-                } else {
-                    return true;
-                }
-            } else {
-                return false;
-            }
-        }
-    }
-
-    function filter(__val__) {
-        var preg = /^([0-9]+\.?[0-9]{0,2})$/;
-        if (preg.test(__val__) === true) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-</script>
